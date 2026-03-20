@@ -1,0 +1,25 @@
+{
+  "name": "notes-web-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vinxi dev",
+    "build": "vinxi build",
+    "start": "vinxi start"
+  },
+  "dependencies": {
+    "@solidjs/router": "^0.14.0",
+    "@solidjs/start": "^1.0.0",
+    "solid-js": "^1.8.0",
+    "vinxi": "^0.4.0",
+    "marked": "^12.0.0",
+    "gray-matter": "^4.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
