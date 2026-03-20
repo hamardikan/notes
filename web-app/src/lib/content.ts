@@ -19,118 +19,40 @@ export interface NoteMetadata {
   tags: string[];
 }
 
-const CONTENT_PATH = "/content";
+const notesData: NoteMetadata[] = [
+  {
+    slug: "index",
+    title: "Home",
+    created: "2024-03-20",
+    tags: [],
+  },
+  {
+    slug: "daily/index",
+    title: "Daily Notes",
+    created: "2024-03-20",
+    tags: ["daily"],
+  },
+  {
+    slug: "daily/2024-03-20",
+    title: "2024-03-20",
+    created: "2024-03-20",
+    tags: ["daily"],
+  },
+  {
+    slug: "topics/index",
+    title: "Topics",
+    created: "2024-03-20",
+    tags: [],
+  },
+];
 
-function getAllNoteFiles(): string[] {
-  return [
-    `${CONTENT_PATH}/index.md`,
-    `${CONTENT_PATH}/daily/index.md`,
-    `${CONTENT_PATH}/daily/2024-03-20.md`,
-    `${CONTENT_PATH}/topics/index.md`,
-  ];
-}
-
-function parseNote(filePath: string, content: string): Note {
-  const { data, content: body } = matter(content);
-  
-  const slug = filePath
-    .replace(`${CONTENT_PATH}/`, "")
-    .replace(/\.md$/, "")
-    .replace(/^daily\//, "daily/");
-
-  return {
-    slug,
-    title: data.title || slug,
-    created: data.created || "",
-    modified: data.modified,
-    tags: data.tags || [],
-    aliases: data.aliases,
-    content: body,
-    raw: content,
-  };
-}
-
-export function getAllNotes(): NoteMetadata[] {
-  const files = getAllNoteFiles();
-  
-  return files.map((file) => {
-    const content = getNoteContent(file);
-    const { data } = matter(content);
-    const slug = file
-      .replace(`${CONTENT_PATH}/`, "")
-      .replace(/\.md$/, "");
-
-    return {
-      slug,
-      title: data.title || slug,
-      created: data.created || "",
-      modified: data.modified,
-      tags: data.tags || [],
-    };
-  });
-}
-
-export function getNoteBySlug(slug: string): Note | null {
-  const paths = [
-    `${CONTENT_PATH}/${slug}.md`,
-    `${CONTENT_PATH}/${slug}/index.md`,
-  ];
-
-  for (const path of paths) {
-    const content = getNoteContent(path);
-    if (content) {
-      return parseNote(path, content);
-    }
-  }
-
-  return null;
-}
-
-export function getNotesByTag(tag: string): NoteMetadata[] {
-  return getAllNotes().filter((note) => note.tags.includes(tag));
-}
-
-export function getDailyNotes(): NoteMetadata[] {
-  return getAllNotes()
-    .filter((note) => note.slug.startsWith("daily/") && note.slug !== "daily/index")
-    .sort((a, b) => b.created.localeCompare(a.created));
-}
-
-export function getAllTags(): { tag: string; count: number }[] {
-  const notes = getAllNotes();
-  const tagCounts = new Map<string, number>();
-
-  for (const note of notes) {
-    for (const tag of note.tags) {
-      tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
-    }
-  }
-
-  return Array.from(tagCounts.entries())
-    .map(([tag, count]) => ({ tag, count }))
-    .sort((a, b) => b.count - a.count);
-}
-
-export function getBacklinks(slug: string): NoteMetadata[] {
-  const allNotes = getAllNotes();
-  const targetSlug = slug.replace(/\//g, "");
-  
-  return allNotes.filter((note) => {
-    const noteContent = getNoteContent(`${CONTENT_PATH}/${note.slug}.md`);
-    const wikiLinkPattern = new RegExp(`\\[\\[${targetSlug}\\]\\]`, "i");
-    return wikiLinkPattern.test(noteContent);
-  });
-}
-
-function getNoteContent(path: string): string {
-  const mockContent: Record<string, string> = {
-    "/content/index.md": `---
-title: Home
-created: 2024-03-20
-tags: []
----
-
-# Welcome to My Notes
+const notesContent: Record<string, Note> = {
+  "index": {
+    slug: "index",
+    title: "Home",
+    created: "2024-03-20",
+    tags: [],
+    content: `# Welcome to My Notes
 
 This is your personal knowledge base.
 
@@ -142,13 +64,14 @@ This is your personal knowledge base.
 ## Search
 
 Use the search bar above to find notes.`,
-    "/content/daily/index.md": `---
-title: Daily Notes
-created: 2024-03-20
-tags: [daily]
----
-
-# Daily Notes
+    raw: "",
+  },
+  "daily/index": {
+    slug: "daily/index",
+    title: "Daily Notes",
+    created: "2024-03-20",
+    tags: ["daily"],
+    content: `# Daily Notes
 
 Daily notes capture what you learn and work on each day.
 
@@ -159,13 +82,14 @@ Daily notes capture what you learn and work on each day.
 ## How to Use
 
 Create a new file in \`content/daily/YYYY-MM-DD.md\` to add a daily note.`,
-    "/content/daily/2024-03-20.md": `---
-title: 2024-03-20
-created: 2024-03-20
-tags: [daily]
----
-
-# 2024-03-20
+    raw: "",
+  },
+  "daily/2024-03-20": {
+    slug: "daily/2024-03-20",
+    title: "2024-03-20",
+    created: "2024-03-20",
+    tags: ["daily"],
+    content: `# 2024-03-20
 
 ## Today
 
@@ -176,20 +100,63 @@ tags: [daily]
 - [ ]
 
 ## Links`,
-    "/content/topics/index.md": `---
-title: Topics
-created: 2024-03-20
-tags: []
----
-
-# Topics
+    raw: "",
+  },
+  "topics/index": {
+    slug: "topics/index",
+    title: "Topics",
+    created: "2024-03-20",
+    tags: [],
+    content: `# Topics
 
 Browse notes by topic.
 
 ## Structure
 
 Notes are organized in \`content/topics/\` folder.`,
-  };
+    raw: "",
+  },
+};
 
-  return mockContent[path] || "";
+export function getAllNotes(): NoteMetadata[] {
+  return notesData;
+}
+
+export function getNoteBySlug(slug: string): Note | null {
+  return notesContent[slug] || null;
+}
+
+export function getNotesByTag(tag: string): NoteMetadata[] {
+  return notesData.filter((note) => note.tags.includes(tag));
+}
+
+export function getDailyNotes(): NoteMetadata[] {
+  return notesData
+    .filter((note) => note.slug.startsWith("daily/") && note.slug !== "daily/index")
+    .sort((a, b) => b.created.localeCompare(a.created));
+}
+
+export function getAllTags(): { tag: string; count: number }[] {
+  const tagCounts = new Map<string, number>();
+
+  for (const note of notesData) {
+    for (const tag of note.tags) {
+      tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+    }
+  }
+
+  return Array.from(tagCounts.entries())
+    .map(([tag, count]) => ({ tag, count }))
+    .sort((a, b) => b.count - a.count);
+}
+
+export function getBacklinks(slug: string): NoteMetadata[] {
+  const targetSlug = slug.replace(/\//g, "");
+  
+  return notesData.filter((note) => {
+    const noteData = notesContent[note.slug];
+    if (!noteData) return false;
+    const wikiLinkPattern = new RegExp(`\\[\\[${targetSlug}\\]\\]`, "i");
+    return wikiLinkPattern.test(noteData.content);
+  });
 }

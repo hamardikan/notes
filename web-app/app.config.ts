@@ -11,4 +11,7 @@ export default defineConfig({
       },
     },
   },
+  nitro: {
+    compatibilityDate: "2024-04-03",
+  },
 });
