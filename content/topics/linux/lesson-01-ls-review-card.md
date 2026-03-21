@@ -35,6 +35,12 @@ tags: [linux, ls, review, flashcard]
 - `-S` sorts entries by size (largest first).
 - Practical readable combo: `ls -lSh`.
 
+## Formatting Reminder
+- `ls -1` -> one entry per line.
+- `ls -m` -> comma-separated list (same idea as `--format=commas`).
+- `ls -lQ` -> quote file names.
+- `--time-style=locale|iso|full-iso` changes date display in long listing.
+
 ## 8 Essential Commands
 
 ```bash

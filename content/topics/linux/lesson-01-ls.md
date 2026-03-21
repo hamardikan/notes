@@ -397,8 +397,60 @@ ls -l --time-style=full-iso
 Output:
 
 ```text
-[paste output here]
+root@ubuntu:~$ ls -1
+File-01.txt
+file-01
+file-01.txt
+file-02
+filesystem
+notmyfile
+notmyfile2
+testDir
+testdir
+theNewestFile
+
+root@ubuntu:~$ ls --format=commas
+File-01.txt, file-01, file-01.txt, file-02, filesystem, notmyfile, notmyfile2, testDir, testdir, theNewestFile
+
+root@ubuntu:~$ ls -m
+File-01.txt, file-01, file-01.txt, file-02, filesystem, notmyfile, notmyfile2, testDir, testdir, theNewestFile
+
+root@ubuntu:~$ ls --format=long
+total 168
+-rw-r--r-- 1 root      root      144907 Mar 21 11:53 File-01.txt
+...
+
+root@ubuntu:~$ ls -lQ
+total 168
+-rw-r--r-- 1 root      root      144907 Mar 21 11:53 "File-01.txt"
+...
+
+root@ubuntu:~$ ls -l --time-style=locale
+total 168
+-rw-r--r-- 1 root      root      144907 Mar 21 11:53 File-01.txt
+...
+
+root@ubuntu:~$ ls -l --time-style=iso
+total 168
+-rw-r--r-- 1 root      root      144907 03-21 11:53 File-01.txt
+...
+
+root@ubuntu:~$ ls -l --time-style=full-iso
+total 168
+-rw-r--r-- 1 root      root      144907 2026-03-21 11:53:47.235283758 +0000 File-01.txt
+...
 ```
+
+Learner interpretation:
+- `ls -1` prints one entry per line; with `-l` this is usually unnecessary.
+- `ls --format=commas` and `ls -m` look the same.
+- `-Q` quotes file names.
+- `locale`, `iso`, and `full-iso` change date/time formatting.
+
+Mentor feedback:
+- Excellent read.
+- Correction: `-m` is not modification-related; it is a formatting alias for comma-separated output.
+- `locale` means system locale format, `iso` is compact ISO-style, and `full-iso` includes full date, seconds precision, and timezone.
 
 ### Practice G - extra useful options
 
