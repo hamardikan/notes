@@ -3,32 +3,14 @@ import { A } from "@solidjs/router";
 import { Title } from "@solidjs/meta";
 import { getAllNotes, NoteMetadata } from "~/lib/content";
 
-declare global {
-  interface Window {
-    pagefind: any;
-  }
-}
-
 const SearchPage: Component = () => {
   const [query, setQuery] = createSignal("");
   const [results, setResults] = createSignal<any[]>([]);
   const [loading, setLoading] = createSignal(false);
-  const [searchReady, setSearchReady] = createSignal(false);
   const [allNotes, setAllNotes] = createSignal<NoteMetadata[]>([]);
 
   onMount(async () => {
     setAllNotes(getAllNotes());
-    
-    if (typeof window !== "undefined") {
-      try {
-        const pagefind = await import("/_static/pagefind.js");
-        window.pagefind = pagefind;
-        setSearchReady(true);
-      } catch (e) {
-        console.log("Pagefind not available, using basic search");
-        setSearchReady(true);
-      }
-    }
   });
 
   const basicSearch = (q: string): NoteMetadata[] => {
@@ -45,17 +27,7 @@ const SearchPage: Component = () => {
     setQuery(value);
     setLoading(true);
 
-    if (window.pagefind) {
-      try {
-        const search = await window.pagefind.search(value);
-        const data = await Promise.all(search.results.slice(0, 20).map((r: any) => r.data()));
-        setResults(data);
-      } catch (e) {
-        setResults(basicSearch(value));
-      }
-    } else {
-      setResults(basicSearch(value));
-    }
+    setResults(basicSearch(value));
 
     setLoading(false);
   };
