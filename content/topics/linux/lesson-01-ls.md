@@ -452,6 +452,11 @@ Mentor feedback:
 - Correction: `-m` is not modification-related; it is a formatting alias for comma-separated output.
 - `locale` means system locale format, `iso` is compact ISO-style, and `full-iso` includes full date, seconds precision, and timezone.
 
+Checkpoint Q/A:
+- Q: What is the practical reason to use `ls -lQ` in scripting or debugging file names?
+- Learner answer: maybe to check file format.
+- Mentor validation: close. The main reason is to make filename boundaries explicit, especially for spaces, tabs, and other tricky characters, so you can debug/parsing safely.
+
 ### Practice G - extra useful options
 
 ```bash

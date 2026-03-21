@@ -40,6 +40,7 @@ tags: [linux, ls, review, flashcard]
 - `ls -m` -> comma-separated list (same idea as `--format=commas`).
 - `ls -lQ` -> quote file names.
 - `--time-style=locale|iso|full-iso` changes date display in long listing.
+- Use `-Q` when debugging weird names (spaces, tabs, leading/trailing spaces).
 
 ## 8 Essential Commands
 
