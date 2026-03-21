@@ -298,6 +298,11 @@ Mentor feedback:
 - Important correction: `ls -ltc` uses `ctime` for sorting/display, not both `mtime` and `ctime`.
 - Baseline behavior is `ls -lt` (mtime). Then `-u` switches to atime, and `-c` switches to ctime.
 
+Checkpoint Q/A:
+- Q: If you run `echo "x" >> file-01.txt`, which one should reflect it most directly: `-lt`, `-ltu`, or `-ltc`?
+- Learner answer: `-lt` because it modifies file content.
+- Mentor validation: Correct. Content append updates `mtime`, so `ls -lt` is the primary one to watch.
+
 ### Practice E - sort by size
 
 ```bash
