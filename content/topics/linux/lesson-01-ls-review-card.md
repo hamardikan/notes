@@ -30,6 +30,11 @@ tags: [linux, ls, review, flashcard]
 - `ls -ltu` -> sort/display by `atime`.
 - `ls -ltc` -> sort/display by `ctime`.
 
+## Size Reminder
+- `-s` shows allocated blocks column.
+- `-S` sorts entries by size (largest first).
+- Practical readable combo: `ls -lSh`.
+
 ## 8 Essential Commands
 
 ```bash

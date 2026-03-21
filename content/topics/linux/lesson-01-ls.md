@@ -321,8 +321,65 @@ What to observe:
 Output:
 
 ```text
-[paste output here]
+root@ubuntu:~$ ls -s
+total 168
+144 File-01.txt  4 file-01.txt  0 filesystem  4 notmyfile2  4 testdir
+0   file-01      4 file-02      4 notmyfile   4 testDir     0 theNewestFile
+
+root@ubuntu:~$ ls -ls
+total 168
+144 -rw-r--r-- 1 root      root      144907 Mar 21 11:53 File-01.txt
+  0 -r--r--r-- 1 root      root           0 Mar 21 11:53 file-01
+  4 -rw-r--r-- 1 root      root          18 Mar 21 11:53 file-01.txt
+  4 -rw-r--r-- 1 root      root          13 Mar 21 11:54 file-02
+  0 lrwxrwxrwx 1 root      root           1 Mar  4 09:06 filesystem -> /
+  4 -rw-r--r-- 1 testuser  testuser      18 Mar 21 11:53 notmyfile
+  4 -rw-r--r-- 1 otheruser otheruser     19 Mar 21 11:53 notmyfile2
+  4 drwxr-xr-x 2 root      root        4096 Mar 21 11:53 testDir
+  4 drwxr-xr-x 3 root      root        4096 Mar 21 11:53 testdir
+  0 -rw-r--r-- 1 root      root           0 Mar 21 11:54 theNewestFile
+
+root@ubuntu:~$ ls -lS
+total 168
+-rw-r--r-- 1 root      root      144907 Mar 21 11:53 File-01.txt
+drwxr-xr-x 2 root      root        4096 Mar 21 11:53 testDir
+drwxr-xr-x 3 root      root        4096 Mar 21 11:53 testdir
+-rw-r--r-- 1 otheruser otheruser     19 Mar 21 11:53 notmyfile2
+-rw-r--r-- 1 root      root          18 Mar 21 11:53 file-01.txt
+-rw-r--r-- 1 testuser  testuser      18 Mar 21 11:53 notmyfile
+-rw-r--r-- 1 root      root          13 Mar 21 11:54 file-02
+lrwxrwxrwx 1 root      root           1 Mar  4 09:06 filesystem -> /
+-r--r--r-- 1 root      root           0 Mar 21 11:53 file-01
+-rw-r--r-- 1 root      root           0 Mar 21 11:54 theNewestFile
+
+root@ubuntu:~$ ls -lh
+total 168K
+-rw-r--r-- 1 root      root      142K Mar 21 11:53 File-01.txt
+...
+
+root@ubuntu:~$ ls -l --si
+total 173k
+-rw-r--r-- 1 root      root      145k Mar 21 11:53 File-01.txt
+...
+
+root@ubuntu:~$ ls -lSh
+total 168K
+-rw-r--r-- 1 root      root      142K Mar 21 11:53 File-01.txt
+drwxr-xr-x 2 root      root      4.0K Mar 21 11:53 testDir
+drwxr-xr-x 3 root      root      4.0K Mar 21 11:53 testdir
+...
 ```
+
+Learner interpretation:
+- `-s` shows size blocks.
+- `-S` sorts by size.
+- `-h` makes output easier to read.
+- Preferred readable command: `ls -lSh`.
+
+Mentor feedback:
+- Correct and solid.
+- Precision note: `-s` shows allocated disk blocks, while `-l` size column shows byte size (or human-readable with `-h`).
+- `-lSh` is a strong practical default when quickly finding large files.
 
 ### Practice F - formatting
 
