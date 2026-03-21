@@ -14,4 +14,6 @@ Notes are organized in `content/topics/` folder.
 
 ## Topics
 
-<!-- Will be populated by topics component -->
+- [[topics/linux/lesson-01-ls]]
+- [[topics/linux/lesson-01-ls-review-card]]
+- [[topics/linux/guided-learning-template]]

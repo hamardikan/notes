@@ -15,7 +15,8 @@ This is your personal knowledge base.
 
 ## Recent Notes
 
-<!-- Will be populated by recent notes component -->
+- [[topics/linux/lesson-01-ls]] - Linux Fundamentals Lesson 01 notes
+- [[topics/linux/lesson-01-ls-review-card]] - 1-minute recap card
 
 ## Search
 

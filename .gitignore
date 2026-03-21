@@ -1,6 +1,7 @@
 node_modules/
 .output/
 web-app/.vinxi/
+web-app/content/
 dist/
 .env
 .env.local
