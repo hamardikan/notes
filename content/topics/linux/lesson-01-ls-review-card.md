@@ -42,6 +42,12 @@ tags: [linux, ls, review, flashcard]
 - `--time-style=locale|iso|full-iso` changes date display in long listing.
 - Use `-Q` when debugging weird names (spaces, tabs, leading/trailing spaces).
 
+## Extra Options Reminder
+- `-d` -> list directory itself, not contents.
+- `-i` -> show inode numbers.
+- `-R` -> recursive listing.
+- `-r` -> reverse current sort.
+
 ## 8 Essential Commands
 
 ```bash

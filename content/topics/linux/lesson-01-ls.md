@@ -473,8 +473,62 @@ ls --help
 Output:
 
 ```text
-[paste output here]
+root@ubuntu:~$ ls -al --author
+total 200
+drwx------  6 root      root      root        4096 Mar 22 13:22 .
+drwxr-xr-x 22 root      root      root        4096 Mar  4 09:06 ..
+...
+
+root@ubuntu:~$ ls -ald
+drwx------ 6 root root 4096 Mar 22 13:22 .
+
+root@ubuntu:~$ ls -ali
+total 200
+1738 drwx------ 6 root root 4096 Mar 22 13:22 .
+2    drwxr-xr-x 22 root root 4096 Mar  4 09:06 ..
+...
+
+root@ubuntu:~$ ls -alR
+.:
+total 200
+...
+
+./testdir/testdir2:
+total 8
+drwxr-xr-x 2 root root 4096 Mar 22 13:22 .
+drwxr-xr-x 3 root root 4096 Mar 22 13:22 ..
+-rw-r--r-- 1 root root 0 Mar 22 13:22 file-05
+
+root@ubuntu:~$ ls -alr
+total 200
+drwxr-xr-x 3 root root 4096 Mar 22 13:22 testdir
+...
+drwx------ 6 root root 4096 Mar 22 13:22 .
+
+root@ubuntu:~$ ls -alSr
+total 200
+-rw-r--r-- 1 root root 0 Mar 22 13:22 file-02
+...
+-rw-r--r-- 1 root root 144438 Mar 22 13:22 File-01.txt
+
+root@ubuntu:~$ ls --version
+ls (GNU coreutils) 9.4
+
+root@ubuntu:~$ ls --help
+Usage: ls [OPTION]... [FILE]...
+...
 ```
+
+Learner interpretation:
+- `-d` lists the directory entry itself, not its contents.
+- `-i` adds inode numbers at the beginning.
+- `-r` reverses the sort order.
+- `-S` sorts by size.
+
+Mentor feedback:
+- Excellent interpretation.
+- Yes, inode is effectively the filesystem-level identifier for a file object (metadata record).
+- Practical note: multiple names can point to the same inode (hard links).
 
 ---
 
